@@ -1,0 +1,125 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+
+<!--================Home Banner Area =================-->
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg" style="height: 350px;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="breadcrumb_iner">
+            <div class="breadcrumb_iner_item">
+              <h2>Order Confirmation</h2>
+              <p>Home <span>-</span> Order Confirmation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================ confirmation part start =================-->
+  <section class="confirmation_part padding_top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="confirmation_tittle">
+          <h3 style="color: rgb(0, 255, 34);">Thank you. Your order has been received.</h3>  
+          </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          <div class="single_confirmation_details">
+            <h4>order info</h4>
+            <ul>
+              <li>
+                <p>Order id</p><span>: <%= latestOrder.orderId %></span>
+              </li>
+              <li>
+                <p>Date</p><span>: <%= latestOrder.date.toDateString() %></span>
+              </li>
+              <li>
+                <p>Total</p><span>: <%= latestOrder.total %></span>
+              </li>
+              <li>
+                <p>Payment method</p><span>: <%= latestOrder.paymentType %></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          <div class="single_confirmation_details">
+            <h4>Billing Address:</h4>
+           <p><%= latestOrder.deliveryAddress %></p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="order_details_iner">
+            <h3>Order Details</h3>
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col" colspan="2">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+              
+                <% for(productDt of productDt){ %>
+                <tr>
+                    
+                  <th><%= productDt.productId.name %></th>
+                  <th></th>
+                  <th><%= productDt.quantity %></th>
+                  <th colspan="2"><span><%= productDt.singleTotal %></span></th>
+            
+                </tr>
+           <%  } %>
+                
+               <tr>
+                  <th colspan="3">Coupon Discount</th>
+                  <th><span><%= latestOrder.discount %></span></th>
+                </tr>
+
+                <tr>
+                  <th colspan="3">Wallet Discount</th>
+                  <th><span><%= wallet %></span></th>
+                </tr>
+                
+                
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="3">total</th>
+                  <th scope="col"><%= totalbill %></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+          <a class="btn_3" style=" width: 15%; margin-top: 2%;"  href="/products">Continue Shopping</a>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+<style>
+  a {
+  text-decoration: none;
+
+}
+</style>
+
+
+
+
+<%- include('../layouts&partials/user/footer.ejs') %>

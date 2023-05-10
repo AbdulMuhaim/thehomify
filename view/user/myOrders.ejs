@@ -1,0 +1,83 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg" style="height: 350px;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="breadcrumb_iner">
+          <div class="breadcrumb_iner_item">
+            <h2>My Orders</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb start-->
+<!--================End Home Banner Area =================-->
+
+
+<div class="col-lg-12 grid-margin stretch-card" style="margin-top: 100px;">
+  <div class="card">
+      <div style="width: 100%;">
+      <div class="card-body">
+         
+
+          <div class="table-responsive">
+              <table class="table table-striped" id="Table" >
+                  <thead>
+                      <tr>
+                          <th>No.</th>
+                          <th>Order ID</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Total</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <% for(let i=0 ;i < orderData.length;i++){%>
+
+                          <tr>
+                              <td>
+                                  <p>
+                                      <%= i+1 %>
+                                  </p>
+                                  
+                              </td>
+                              <td><a href="/orderDetails/<%=orderData[i]._id%>">#<%=orderData[i]._id%></a></td>
+                              <td>
+                                  <%=orderData[i].date.toDateString() %>
+                              </td>
+                              
+                              <td style="color: rgb(255, 0, 0);">
+                                  <%=orderData[i].status%>
+                              </td>
+                              <td>
+                                  &#x20B9;
+                                  <%=orderData[i].total%>&nbsp;for
+                                      <%=orderData[i].products.length%>
+                                          item(s)</td>
+                          </tr>
+
+
+                          
+
+                          <% } %>
+                  </tbody>
+              </table>
+
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<%- include('../layouts&partials/user/footer.ejs') %>

@@ -1,0 +1,102 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!--================Home Banner Area =================-->
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="breadcrumb_iner">
+            <div class="breadcrumb_iner_item">
+              <h2>Wishlist</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Cart Area =================-->
+  <section class="cart_area padding_top">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+                
+              </tr>
+            </thead>
+
+
+
+
+
+            <tbody>
+
+              <% for( products of wishfind.wishlist ){ %>
+
+              <tr>
+                <td>
+                    <div class="media">
+                    <div class="d-flex">
+                      <img style="width: 100px;" src="/adminassets/images/<%= products.productid.image[0] %>" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <p> <%= products.productid.name %> </p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5> <%= products.productid.price %>  </h5>
+                </td>
+
+                <td>
+                  <a class="btn_1" href="/addtoCartfromWishlist/<%=products.productid._id%>">Add to Cart</a>
+                </td>
+                <td>
+                  <a class="btn_3" href="/removefromWishlist/<%=products.productid._id%>">Remove</i></a>
+                </td>
+              </tr>
+
+
+              <% } %>
+
+
+              <tr class="bottom_button">
+                <td>
+                 
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <div class="cupon_text float-right">
+                    <a class="btn_1" href="/products">Continue Shopping</a>
+                  </div>
+                </td>
+              </tr>
+
+
+            </tbody>
+
+
+
+
+
+          </table>
+          <!-- <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="#">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+          </div> -->
+        </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+
+ 
+  <%- include('../layouts&partials/user/footer.ejs') %>

@@ -1,0 +1,99 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+<!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg" style="height: 350px;">
+        <div class="container">
+            <div class="row justify-content-center" style="height: 300px;">
+                <div class="col-lg-8" style="height: 300px;">
+                    <div class="breadcrumb_iner" style="height: 300px;">
+                        <div class="breadcrumb_iner_item" style="height: 300px;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- breadcrumb start-->
+<!--================End Home Banner Area =================-->
+
+<section style="background-color: #ecfdff">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="/adminassets/images/beckham.jpg"
+                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+
+                        <% if(userdt){ %>
+                        <h5 class="my-3"><%= userdt.name %></h5>
+
+                        <p class="text-muted mb-4"><%= userdt.email %></p>
+                        <div class="d-flex justify-content-center mb-2">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <% } %>
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        
+                        <div class="row">
+                            
+                            <% for(Address of Address) { %>
+
+                            <div class="col-sm-9  my-3">
+                               
+                                <h4  style="display: inline-block;">
+<%= Address.name %>,<%= Address.company %>,<%= Address.street %>,<%= Address.district %>,<%= Address.state %>,<%= Address.country %>,<%= Address.pincode %>,
+                                </h4>
+                                
+                           
+                                
+                                <div class="dropdown" style="display: inline-block;" >
+                                    <a class="dropdown-toggle hidden-arrow" type="button" id="dropdownMenuicon"
+                                        data-mdb-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-lg text-dark"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuicon">
+
+                                        
+                                        <li><a class="dropdown-item" href="/editAddress/<%= Address._id %>"> <i></i>edit</a></li>
+                                        <li><a class="dropdown-item" href="/deleteAddress/<%= Address._id %>"> <i></i>delete</a></li>
+                                      
+                                    </ul>
+                                </div>
+                                <hr>
+                               
+                            </div> 
+                            
+                            <% } %>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <a href="/profile"><button type="button" style="background-color: #ff3368 ;" class="btn_3">Back</button></a>
+
+            </div>
+
+    
+
+</section>
+
+
+
+
+<%- include('../layouts&partials/user/footer.ejs') %>

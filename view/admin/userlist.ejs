@@ -1,0 +1,55 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<div class="col-lg-6 grid-margin stretch-card" style="width: 100%;">
+    <div class="card">
+      <div class="card-body">
+    
+        <table class="table">
+          <thead>
+            <tr>
+             <th>S.no</th>
+             <th>User Name</th>
+             <th>Email</th>
+             <th>Mobile</th>
+             <th>Status</th>
+             <th></th>
+             <th></th>
+             </tr>
+          </thead>
+
+          <tbody>
+           <% for(let i = 0 ; i < userdata.length ; i++){ %>
+            <tr> 
+              <td><%=[i+1] %></td>
+              <td><%= userdata[i].name %></td>
+              <td><%= userdata[i].email %></td>
+              <td><%= userdata[i].mobile %></td>
+              <td><%= userdata[i].status %></td>
+
+              <% if( userdata[i].status === true){
+                
+                %>
+                <td><a href="/admin/blockuser/<%= userdata[i]._id %>"><button class="btn btn-outline-primary">Block</button></a></td>
+
+              <%
+
+              }else{
+
+                %>
+                <td><a href="/admin/unblockuser/<%= userdata[i]._id %>"><button class="btn btn-outline-primary">Unblock</button></a></td>
+              
+                <%
+              }
+
+              %>
+
+            </tr>
+            <% } %>
+         </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+

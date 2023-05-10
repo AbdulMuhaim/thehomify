@@ -1,0 +1,203 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<p class="text-primary">hfdjkshgljsgfdhlkgfjlkfdgsjlk</p>
+<div style="display: flex;">
+ <h1>hellosfdjnlkjlkjfdglk;</h1>
+  <div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Doughnut chart</h4>
+        <canvas id="doughnutChart" style="height:250px"></canvas>
+      </div>
+    </div>
+  </div>
+
+    <div style="margin-top: 40px; margin-left: 70px;">
+        <h4 class="card-title"
+            style="text-align: center; font-size: 28px; font-weight: bold; color: #aef7f8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+            </h4>
+
+        <div class=" row d-flex justify-content-between" style="margin-top: 50px;  margin-left: 45px;">
+            <div class="col-sm-4 grid-margin">
+                <div class="card" style="background-color: rgb(36, 39, 72); width:70%;">
+                    <div class="card-body">
+                        <h5 style="color: aliceblue;">Total Orders</h5>
+                        <h1>hek</h1>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 style="color: aliceblue;" class="mb-0 mt-2"><%=totalOrders%></h2>
+                                    <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mt-3">Since last month</h6>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+                <div class="card" style="background-color: rgb(36, 39, 72); width:70%;">
+                    <div class="card-body">
+                        <h5 style="color: aliceblue;">Total Sales</h5>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 style="color: aliceblue;" class="mb-0"><%=totalSales[0].total%></h2>
+                                    <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                                <h6 class="text-muted font-weight-normal">Since last month</h6>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-wallet-travel text-danger ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+                <div class="card" style="background-color: rgb(36, 39, 72); width:70%;">
+                    <div class="card-body">
+                        <h5 style="color: aliceblue;"> Total Users</h5>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 style="color:aliceblue;" class="mb-0"><%=totalUsers%></h2>
+                                    <p class="text-danger ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                                <h6 class="text-muted font-weight-normal"> Since last month</h6>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-monitor text-success ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row  d-flex margin-left:0px">
+            <div class="col-lg-6 grid-margin stretch-card" style="width:100%; ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Daily order for a week</h4>
+                        <canvas id="barChart" style="height:300px;width:100%;background-color: rgb(36, 39, 72); "></canvas>
+                    </div>
+                </div>
+            </div>
+              <div class="col-lg-6 grid-margin stretch-card" style="width:100%; ">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Total orders as per category</h4>
+                        
+                              <h4 class="card-title">Doughnut chart</h4>
+                              <canvas id="doughnutChart" style="height:250px"></canvas>
+                            
+                      
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <div class="col-sm-4 grid-margin" style="margin-top: 13%;">
+                <div class="card" style="background-color: rgb(36, 39, 72); width:70%;">
+                    <div class="card-body">
+                        <h5 style="color: aliceblue;">Total Products</h5>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 style="color: aliceblue;" class="mb-0 mt-2"><%=totalProducts%></h2>
+                                    <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mt-3">Since last month</h6>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Transaction History</h4>
+                    <canvas id="transaction-history" class="transaction-chart" style="background-color: rgb(253, 253, 253);"></canvas>
+                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                      <div class="text-md-center text-xl-left">
+                        <h6 class="mb-1" >Cash On Delivery </h6>
+                        <p class="text-muted mb-0">within Last month</p>
+                      </div>
+                      <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                        <h6 class="font-weight-bold mb-0"><%=pTotal[0].total%></h6>
+                      </div>
+                    </div>
+                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                      <div class="text-md-center text-xl-left">
+                        <h6 class="mb-1">Online payment</h6>
+                        <p class="text-muted mb-0">within last month</p>
+                      </div>
+                      <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                        <h6 class="font-weight-bold mb-0"><%=pTotal[1].total%></h6>
+                      
+                      </div>
+                    </div>
+
+                    
+
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" value="<%=categoryNames%>" id="catName">
+              <input type="hidden" value="<%=paymentTypes%>" id="pType">
+              <input type="hidden" value="<%=orderCounts%>" id="orderct">
+
+              <div class="col-sm-4 grid-margin" style="margin-top: 13%;">
+                <div class="card" style="background-color: rgb(36, 39, 72); width:70%;">
+                    <div class="card-body">
+                        <h5 style="color: aliceblue;">Total Categories</h5>
+                        <div class="row">
+                            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                                <div class="d-flex d-sm-block d-md-flex align-items-center">
+                                    <h2 style="color: aliceblue;" class="mb-0 mt-2"><%=totalCategories%></h2>
+                                    <p class="text-success ml-2 mb-0 font-weight-medium"></p>
+                                </div>
+                                <h6 class="text-muted font-weight-normal mt-3">Since last month</h6>
+                            </div>
+                            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                                <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+          <input type="hidden" name="" id="countoo" value="<%=categoryCounts%>">
+
+    </div>
+
+
+    </div>
+
+    <%- include('../layouts&partials/admin/footer.ejs') %>
+
+    <script src="/adminassets/vendors/chart.js/Chart.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="/adminassets/js/chart.js"></script>
+
+
+
+
+
+
+
+
+
+
+

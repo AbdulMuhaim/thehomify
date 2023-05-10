@@ -1,0 +1,95 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+
+<div style="display: flex; background-color: bisque;"  >
+    
+
+    <div style="margin-top: 70px;">
+        <section class="h-100 gradient-custom">
+            <div class="container py-5 h-100 " style="overflow: hidden;">
+                <h4 class="card-title"
+                    style="text-align: center; font-size: 28px; font-weight: bold; color:black; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+                    Order Details</h4>
+                <a href="/admin/orderList"><button class="btn-primary">back</button></a>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-10 col-xl-8">
+                        <div class="card" style="border-radius: 10px;">
+
+                            <div class="card-body p-4">
+                                <%  for(orderdt of orderdt) { %>
+
+                                <div class="card shadow-0 border mb-4" style="background-color:white">
+                                    <div class="card-body">
+                  <div class="row" style="background-color:white;display: flex; justify-content: space-around">
+                                            <div class="col-md-2">
+                                                <img src="/adminassets/images/<%= orderdt.productId.image[0] %> " class="img-fluid" alt="Phone">
+                                            </div>
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0"><strong>Name: </strong>
+                                                    <%= orderdt.productId.name %></p>
+                                            </div>
+
+                                            
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small"><strong> Quantity:
+                                                    </strong><%=orderdt.quantity %></p>
+                                            </div>
+
+                                            <div
+                                                class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                <p class="text-muted mb-0 small" style="margin-right: auto;">
+                                                    <strong>Price:</strong><%=orderdt.productId.price %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                        <div class="row d-flex align-items-center">
+                                            <div class="col-md-10">
+                                                <p class="text-muted mb-3 small">
+                                                    <strong>Address:</strong> <%=orderdata.deliveryAddress %>
+                                                </p>
+                                                <div class="d-flex justify-content-around mb-1">
+                                                    <p class="text-muted mt-1 mb-0 small ms-xl-5">
+                                                        <strong>OrderID:</strong> <%=orderdata.orderId %>
+                                                    </p>
+                                                    <p class="text-muted ml-3 mt-1 mb-0 small ms-xl-5">
+                                                        <strong>Payment Type:</strong><%=orderdata.paymentType %>
+                                                    </p>
+                                                    <p class="text-muted ml-3 mt-1 mb-0 small ms-xl-5">
+                                                        <strong>Delivery Status:</strong> <%=orderdata.status %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            
+                                <div class="d-flex justify-content-between pt-2">
+                                    <p class="fw-bold mb-0">Order Details</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total :
+                                        </span><%= orderdata.total %></p>
+                                </div>
+
+                            <% } %>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<%- include('../layouts&partials/admin/footer.ejs') %>

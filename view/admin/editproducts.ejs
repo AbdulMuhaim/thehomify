@@ -1,0 +1,72 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+
+      
+      <form class="form-inline" method="post" action="/admin/editproducts/<%= product._id %>"  enctype="multipart/form-data">
+
+        <label for="inlineFormInputName2">Product Name</label>
+        <input name="name" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required value="<%= product.name %>">
+
+        <label for="inlineFormInputName2">Description</label>
+        <input name="description" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required value="<%= product.description %>">
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Select Category   (<%= product.categoryid.name%>)</label>
+
+          <select class="form-control" id="exampleFormControlSelect1" name="category" required aria-valuetext="">
+            
+            <% for(category of categories){ %>
+        
+              <option > <%= category.name %> </option>
+
+            <% } %>
+            </select>
+        </div>
+
+        <label  for="inlineFormInputName2">Brand</label>
+        
+        <input name="brand" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required value="<%= product.brand %>" >
+
+        <label for="inlineFormInputName2">Images</label>
+    
+        <% for (let i = 0; i < product.image.length; i++) { %>
+          <div>
+            <img style="width: 50px;" src="/adminassets/images/<%= product.image[i] %>" alt="" id="image<%= i %>" > 
+            <a href="/admin/deleteImage?imageId=<%= product.image[i] %>&productId=<%= product._id %>" class="delete-image">
+             <i class="fa-solid fa-trash"></i>
+              
+            </a>
+          </div>
+        <% } %>
+        
+
+        <input name="image" type="file" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2"  multiple value="<%= product.image[0] %>">
+
+        <label for="inlineFormInputName2">Price</label>
+        <input name="price" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required value="<%= product.price %>">
+
+        <label  for="inlineFormInputName2">Quantity</label>
+        <input name="quantity" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required value="<%= product.quantity %>">
+
+        <br>
+
+        <button type="submit" class="btn btn-gradient-primary mb-2">Update Product</button>
+      </form>
+ 
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

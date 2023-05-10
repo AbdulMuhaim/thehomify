@@ -1,0 +1,40 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<div style="display: flex;">
+  
+    <div style="margin-top: 200px; width:100%">
+      <form action="/admin/updateCoupon/<%=data._id%>" method="post" class="forms-sample">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="exampleInputUsername1">Coupon Code</label>
+              <input type="text" class="form-control" value="<%=data.couponId%>" id="exampleInputUsername1" name="couponId">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Discount Percentage</label>
+              <input type="number" class="form-control" value="<%=data.discount%>" id="exampleInputEmail1" name="discount">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Expire Date</label>
+                <input type="date" class="form-control" value="<%=data.expDate.toISOString().slice(0,10)%>" id="exampleInputPassword1" name="expDate">
+              <input type="date" class="form-control" value="<%=data.expDate%>" id="exampleInputPassword1" name="expDate">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="exampleInputConfirmPassword1">Minimum purchase</label>
+              <input type="number" class="form-control" value="<%=data.minPurchase%>" id="exampleInputConfirmPassword1" name="minPurchase">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputConfirmPassword1">Maximum Limit</label>
+              <input type="number" class="form-control" value="<%=data.maxLimit%>" id="exampleInputConfirmPassword1" name="maxPurchase">
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button class="btn btn-dark">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+<%- include('../layouts&partials/admin/footer.ejs') %>

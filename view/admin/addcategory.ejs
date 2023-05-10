@@ -1,0 +1,29 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+
+      
+      <form class="form-inline" method="post" action="/admin/addcategory">
+
+        <label class="sr-only" for="inlineFormInputName2">Category Name</label>
+        <input name="name" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+        <% 
+
+         if(typeof message !== 'undefined'){
+                                
+        %>
+         <h5><%= message %></h5>
+        <%
+        
+        }
+        %>
+
+        <button type="submit" class="btn btn-gradient-primary mb-2">Add Category</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

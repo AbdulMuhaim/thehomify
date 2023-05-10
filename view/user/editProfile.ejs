@@ -1,0 +1,75 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+<!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg" style="height: 350px;">
+        <div class="container">
+            <div class="row justify-content-center" style="height: 300px;">
+                <div class="col-lg-8" style="height: 300px;">
+                    <div class="breadcrumb_iner" style="height: 300px;">
+                        <div class="breadcrumb_iner_item" style="height: 300px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- breadcrumb start-->
+
+  
+  <!--================End Home Banner Area =================-->
+
+<section style="background-color: #ecfdff">
+  <div class="container py-5">
+   
+  
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="/adminassets/images/beckham.jpg" alt=""
+              class="rounded-circle img-fluid" style="width: 150px;">
+              <% if (userdt){ %>
+
+            <h5 class="my-3"><%= userdt.name %></h5>
+            
+            <p class="text-muted mb-4"><%= userdt.email %></p>
+            
+            <div class="d-flex justify-content-center mb-2">
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      
+        <div class="col-md-8" >
+          <form action="/updateProfile/<%= userdt._id %>"  method="post" >
+            <div class="p-3 py-5" style="width: 100%; border: 0px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mb-3"><label class="labels">Name</label><input type="text" class="form-control" placeholder="name" value="<%= userdt.name %>"  name="name"></div>
+                </div>
+                <div class="row mt-3">
+                    
+                    <div class="col-md-12 mb-3"><label class="labels">Email ID</label><input type="email" class="form-control" placeholder="enter email id" value="<%= userdt.email %>"  name="email"></div>
+  
+                    
+               <% } %>
+                <div class="mt-5 text-center mb-3"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+            </div>
+            </form>
+        </div>
+        </div>
+    
+    </div>
+
+  </div>
+
+
+  
+</section>
+
+
+
+
+<%- include('../layouts&partials/user/footer.ejs') %>

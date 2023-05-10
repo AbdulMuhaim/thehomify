@@ -1,0 +1,147 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <!--Ajax apis-->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+
+
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"
+                        style="text-align: center; font-size: 28px; font-weight: bold; color: #aef7f8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+                        Coupon List</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="Table" >
+                            <thead>
+                                <tr style="height: 50px;">
+                                    <th>S.No </th>
+                                    <th>Coupon Code</th>
+                                    <th>Added Date</th>
+                                    <th>Discount percent</th>
+                                    <th>Expire Date</th>
+                                    <th>min Purchase</th>
+                                    <th>max limit</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% coupons.forEach(function(coupon, index) { %>
+                                <tr style="height: 50px;">
+                                    <td class="py-1">
+                                        <%= index+1 %>
+
+                                    </td>
+                                    <td><%= coupon.couponId %></td>
+                                    <td><%= coupon.addDate.toDateString() %></td>
+                                    <td><%= coupon.discount %></td>
+                                    <td><%= coupon.expDate.toDateString() %></td>
+                                    <td><%= coupon.minPurchase %></td>
+                                    <td><%= coupon.maxLimit %></td>
+                                    <td><%= coupon.status %></td>
+                                    <td>
+                                        <% if(coupon.status==true) { %>
+                                        <button style="height: 40px; margin-right: 20px;" class="btn btn-primary "
+                                            onclick="alerted('<%= coupon._id %>')">block</button>
+                                        <% } else { %>
+                                        <button style="height: 40px; margin-right: 20px;" onclick="alertedUndo('<%= coupon._id %>')"
+                                            class="btn btn-primary">unblock</button>
+                                        <% } %>
+                                        <a href="/admin/editCoupon/<%=coupon._id%>"> <button style="height: 40px;" class="btn btn-primary">Edit</button></a>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+    <script>
+
+
+        function alerted(cId) {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to block the coupon",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, blocked '
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                url: '/admin/blockCoupon/'+cId,
+                method: 'get',
+                success: (response) => {
+                  Swal.fire({
+                    text: 'coupon blocked successfully',
+                    icon: 'success',
+                    showConfirmButton: false
+                  })
+                  setTimeout(() => {
+                    location.reload()
+                  }, 800)
+                },
+                
+              })
+            }
+          })
+        }
+        
+        
+        
+        
+        
+        function alertedUndo(cId) {
+            
+            Swal.fire({
+              title: 'Are you sure?',
+              text: "you want to unblock the coupon",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Yes, unblock  it!'
+             
+            }).then((result) => {
+              
+              $.ajax({
+                
+                url: '/admin/unblockCoupon/' + cId,
+                method: 'get',
+                success: (response) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                     text: "coupon is unblocked",
+                      icon: 'success',
+                      
+                      showConfirmButton: false,
+                    })
+                    setTimeout(() => {
+                      location.reload()
+                    }, 800)
+                  }
+                }
+              })
+              event.preventDefault();
+            })
+          }
+        
+        
+            </script>
+        
+
+
+        <%- include('../layouts&partials/admin/footer.ejs') %>
+    

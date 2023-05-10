@@ -1,0 +1,55 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<div class="col-lg-6 grid-margin stretch-card" style="width: 100%;">
+    <div class="card">
+      <div class="card-body">
+    
+
+        <!-- <button class="btn btn-primary" style="font-weight: bold; "> <a style="text-decoration: none;" href="/admin/addcategory"> Add Category </a></button> -->
+       <a  style="text-decoration: none;" href="/admin/addcategory"><button class="btn btn-primary"> Add Category</button></a>
+
+        <table class="table">
+          <thead>
+            <tr>
+             <th>S.no</th>
+             <th>Category Name</th>
+             <th> Status</th>
+             <th></th>
+             <th></th>
+             </tr>
+          </thead>
+
+          <tbody>
+           <% for(let i = 0 ; i < category.length ; i++){ %>
+            <tr> 
+              <td><%=[i+1] %></td>
+              <td><%= category[i].name %></td>
+              <td><%= category[i].status %></td>
+              <% if( category[i].status === true){
+                
+                %>
+                <td><a href="/admin/blockcategory?id=<%= category[i]._id %>"><button class="btn btn-outline-primary">Block</button></a></td>
+
+              <%
+
+              }else{
+
+                %>
+                <td><a href="/admin/unblockcategory?id=<%= category[i]._id %>"><button class="btn btn-outline-primary">Unblock</button></a></td>
+              
+                <%
+              }
+
+              %>
+        
+              <td><a href="/admin/editcategory/<%= category[i]._id %>"><button class="btn btn-outline-primary">Edit</button></a></td>
+            </tr>
+            <% } %>
+         </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+

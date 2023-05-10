@@ -1,0 +1,49 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+
+      
+      <form class="form-inline" method="post" action="/admin/addproducts" enctype="multipart/form-data">
+
+        <label class="sr-only" for="inlineFormInputName2">Product Name</label>
+        <input name="name" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+
+        <label class="sr-only" for="inlineFormInputName2">Description</label>
+        <input name="description" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Select Category</label>
+
+          <select class="form-control" id="exampleFormControlSelect1" name="category" required >
+            <% for(category of categories){ %>
+        
+              <option > <%= category.name %> </option>
+
+            <% } %>
+            </select>
+        </div>
+
+        <label class="sr-only" for="inlineFormInputName2">Brand</label>
+        <input name="brand" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+
+        <label class="sr-only" for="inlineFormInputName2">Image</label>
+        <input name="image" type="file" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" multiple >
+
+        <label class="sr-only" for="inlineFormInputName2">Price</label>
+        <input name="price" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+
+        <label class="sr-only" for="inlineFormInputName2">Quantity</label>
+        <input name="quantity" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" required >
+
+        
+
+        
+        <button type="submit" class="btn btn-gradient-primary mb-2">Add Product</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

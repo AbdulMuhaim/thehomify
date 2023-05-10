@@ -1,0 +1,294 @@
+<%- include('../layouts&partials/user/header.ejs') %>
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg " style="height: 350px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Order Details</h2>
+                        <p>Home <span>-</span>My Orders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid d-flex  justify-content-center " style="margin: 0; background-color: #ecfdff;">
+    
+
+   
+
+    <div class="card-body"  id="example" >
+
+        <%  for(orderdt of orderdt){ %>
+           
+        <div class="row mt-4">
+            <div class="col">
+                
+                
+                    <div class="card card-2 col-md-8 mx-auto">
+                    <div class="card-body">
+
+                        <div class="media " >
+                            <div class="sq align-self-center "> <img
+                                    class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
+                                    src="<%= orderdt.productId.image[0] %>" width="135" height="135" /> </div>
+                            <div class="media-body my-auto text-right ">
+                                <div class="row  my-auto flex-column flex-md-row">
+
+
+                                    <div class="col my-auto">
+                                        <h6 class="mb-0 " style="margin-right: 10%;"><strong>Product:</strong> <%= orderdt.productId.name %></h6>
+                                    </div>
+                                    <div class="col my-auto">
+                                        <h6 class="mb-0 " style="margin-right: 10%;"><strong>Name:</strong> <%= userData %></h6>
+                                    </div>
+                                    <div class="col my-auto">
+                                        <h6 class="mb-0 "><strong> Address:</strong><%= orderData.deliveryAddress %></h6>
+                                    </div>
+                                    <div class="col my-auto ">
+                                                <h6 class="mb-0"> <strong>Quantity:</strong> <%= orderdt.quantity %></h6>
+                                            </div>
+                                            <div class="col my-auto ">
+                                                <h6 class="mb-0"><strong>Total:&#x20B9;</strong>   <%=  orderdt.singleTotal %> </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-3 ">
+                                <div class="row ">
+
+                                    <div class="col-md-3 mb-3"> <span><span ><strong>orderId:</strong>  </span> <%= orderData.orderId %></span> </div>
+                                   
+                                    <div class="col mt-auto mb-3 text-center" ><span><strong>Status:</strong> </span><span> <%= orderData.status %></span></div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% } %> 
+                 
+                 
+                <div class="row mt-4 col-md-8 mx-auto" style="margin-right: 0;">
+                    <div class="col">
+                         <div class="row justify-content-between">
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1 " style="margin-right: 4%;"> <b> <strong> Discount:</strong></b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1"><%= orderData.discont %> </p>
+                            </div>
+                        </div>
+                      
+
+
+                        <div class="row" >
+                            
+                           
+                            <div class="flex-sm-col text-right col">
+                                <p class="mb-1"><b><strong>Total Bill:</strong> </b></p>
+                            </div>
+                            <div class="flex-sm-col col-auto">
+                                <p class="mb-1">&#x20B9;<%= orderData.total %></p>
+                            </div>
+
+                           
+
+                        </div>
+                       
+                        
+
+                    </div>
+                </div>
+
+             
+
+
+                <input style="padding:5px;margin-left: 1200px;" class="btn btn-success" value="Download Invoice" type="button"
+                onclick="myFunction()"></input>
+
+                <% const deliveryDate=new Date(orderData.date); %>
+                    <% const returnDate=new Date(deliveryDate.getTime() + (14 * 24 * 60 * 60 * 1000)); %>
+                      <% const currentDate=new Date(); %>
+
+            <% if (status == "Delivered" && currentDate <=returnDate) { %>
+                    <a href="/returnOrder/<%= id %>" style="margin-left: 1200px;">
+                      <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+                        Return Order
+                      </button>
+                    </a>
+            <% }else if(status == "Placed"){ %>
+                <a href="/cancelOrder/<%= id %>" style="margin-left: 1200px;">
+                  <button class="btn btn-outline-primary btn-sm mt-2" type="button" >
+                    Cancel Order
+                  </button>
+                </a>
+                
+                <% } %>
+            
+            
+            
+               
+            </div>
+
+
+
+ 
+
+
+    
+
+   
+
+        </div>
+    </div>
+      
+</div>
+
+
+
+
+<%- include('../layouts&partials/user/footer.ejs') %>
+
+
+
+<script>
+    function myFunction() {
+
+      var content = document.getElementById("example").outerHTML;
+      var newWindow = window.open();
+      newWindow.document.write(content);
+      newWindow.print();
+      newWindow.close();
+    }
+  </script>
+
+
+
+<style>
+    .container-fluid {
+        margin-top: 200px;
+    }
+
+    p {
+        font-size: 14px;
+        margin-bottom: 7px;
+
+    }
+
+    .small {
+        letter-spacing: 0.5px !important;
+    }
+
+    .card-1 {
+        box-shadow: 2px 2px 10px 0px rgb(190, 108, 170);
+    }
+
+    hr {
+        background-color: rgba(248, 248, 248, 0.667);
+    }
+
+
+    .bold {
+        font-weight: 500;
+    }
+
+    .change-color {
+        color: #AB47BC !important;
+    }
+
+    .card-2 {
+        box-shadow: 1px 1px 3px 0px rgb(112, 115, 139);
+
+    }
+
+    .fa-circle.active {
+        font-size: 8px;
+        color: #AB47BC;
+    }
+
+    .fa-circle {
+        font-size: 8px;
+        color: #aaa;
+    }
+
+    .rounded {
+        border-radius: 2.25rem !important;
+    }
+
+
+    .progress-bar {
+        background-color: #AB47BC !important;
+    }
+
+
+    .progress {
+        height: 5px !important;
+        margin-bottom: 0;
+    }
+
+    .invoice {
+        position: relative;
+        top: -70px;
+    }
+
+    .Glasses {
+        position: relative;
+        top: -12px !important;
+    }
+
+    .card-footer {
+        background-color: #AB47BC;
+        color: #fff;
+    }
+
+    h2 {
+        color: rgb(78, 0, 92);
+        letter-spacing: 2px !important;
+    }
+
+    .display-3 {
+        font-weight: 500 !important;
+    }
+
+    @media (max-width: 479px) {
+        .invoice {
+            position: relative;
+            top: 7px;
+        }
+
+        .border-line {
+            border-right: 0px solid rgb(226, 206, 226) !important;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        h2 {
+            color: rgb(78, 0, 92);
+            font-size: 17px;
+        }
+
+        .display-3 {
+            font-size: 28px;
+            font-weight: 500 !important;
+        }
+    }
+
+    .card-footer small {
+        letter-spacing: 7px !important;
+        font-size: 12px;
+    }
+
+    .border-line {
+        border-right: 1px solid rgb(226, 206, 226)
+    }
+</style>

@@ -1,0 +1,54 @@
+<%- include('../layouts&partials/admin/header.ejs') %>
+
+
+<div style="display: flex;">
+    
+
+    <div style="margin-top: 70px; width:100% ">
+        <h4 class="card-title"
+            style="text-align: center; font-size: 28px;margin-top: 30px; font-weight: bold; color: #ffffff; text-transform: uppercase; letter-spacing: 2px; ">
+            Edit Banner</h4>
+        <div class="col-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <form class="forms-sample" method="post" enctype="multipart/form-data" action="/admin/updateBanner">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Banner Name</label>
+                            <input type="text" class="form-control" id="exampleInputName1" placeholder="Banner Name" value="<%=data.name%>"
+                                name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputName1">Description</label>
+                            <input type="text" class="form-control" id="exampleInputName1" placeholder="description" value="<%=data.description%>"
+                                name="description">
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label>Upload Image</label>
+                            <div class="input-group col-xs-12">
+                               <img src="/adminassets/images/<%=data.image%>" style="width: 10vh;height: 10vh; margin-right: 10px;" id="imgView">
+        <input type="file" name="image" style="margin-bottom: 50px;" onchange="viewImage(event)" class="form-control-file mt-2" id="image" multiple>
+                            </div>
+                        </div>
+                             <input type="hidden" value="<%=data._id%>" name="id">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a href="/admin/bannerList"><button type="button" class="btn btn-dark">Back</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+    <script>
+  function viewImage(event) {
+    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+  }
+</script>
