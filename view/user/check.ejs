@@ -389,7 +389,7 @@ const smallTag = document.getElementById('codestate');
             method: 'post',
             data: $("#form").serialize(),
             success: (response) => {
-            
+              
                 if (response.codStatus) {
                     location.href = '/orderConfirmed'
                 } else if (response.wstatus) {
