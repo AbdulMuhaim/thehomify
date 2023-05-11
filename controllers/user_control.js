@@ -5,20 +5,25 @@ const category = require("../models/category_schema")
 const { TrustProductsEntityAssignmentsContextImpl } = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
 const order = require("../models/order_schema")
 let session;
+let Totall;
 const { v4: uuidv4 } = require("uuid");
 const coupon = require("../models/coupon_schema")
 const razorpay = require('razorpay');
 const banner = require('../models/banner_schema')
 const walletData = require('../models/wallet_schema')
+let dotenv=require("dotenv");
+const { log } = require("console");
+dotenv.config()
+
 
 var instance = new razorpay({
-  key_id: "rzp_test_JIiuMLMMvE8WDr",
-  key_secret: "tTIQJkJw52gKqzn1iE0GLgBC",
+  key_id: process.env.keyid,
+  key_secret: process.env.secret
 });
 
 const client = require("twilio")(
-  "ACbe5f3978fc82d1a846487e7033d88966",
-  "98c6582bd3bb5224fa0ef4ede5374dda",
+  process.env.tid,
+  process.env.token,
   {
     lazyLoading: true,
   }
@@ -1047,10 +1052,11 @@ const placeOrder = async (req, res) => {
           const product1 = orderDetails.productid[i];
           const quantity = orderDetails.quantity[i];
           const total = orderDetails.price[i];
+          const Total = total - 
           productdt.push({
             productId: product1,
             quantity: quantity,
-            singleTotal: total,
+            singleTotal: Total,
           });
         }
 
@@ -1066,6 +1072,8 @@ console.log("keyyy");
         const orderdt = new order(orderDetails);
         orderdt.save();
         console.log("hoii");
+        console.log(process.env.keyid)
+        console.log(process.env.secret)
         let options = {
           amount: orderDetails.total * 100, // amount in the smallest currency unit
           currency: "INR",
@@ -1134,6 +1142,31 @@ const orderConfirmed = async (req, res) => {
   
   try {
     const id = req.session.user_id
+
+    if(walletCheck==true){
+
+      const Idd = await order
+      .findOne({})
+      .sort({date:-1})
+      .populate("products.productId")
+      .lean();
+
+    const orderId = Idd.orderId  
+    const userDatta =await user.findOne({_id:id})
+    const wall = userDatta.wallet
+    userDatta.totalbill =  userData.totalbill - wall;
+    await userDatta.save();
+
+    const walletDt = {
+      status:"debited",
+      amount:wallet,
+      date:Date.now(),
+      userId:id,
+      orderId:orderId
+    }
+    const Data = new walletData(walletDt)
+    Data.save();
+  }
     
     const orderData = await order.findOne({})
     const userdata = req.session.user_id;
@@ -1629,10 +1662,13 @@ const cancelCoupon =async(req,res)=>{
 }
 
 
-
+let walletCheck;
 
 const walletAmount = async(req,res)=>{
   try {
+
+    walletCheck = true;
+
     const id = req.session.user_id
     
     const userData =await user.findOne({_id:id})
@@ -1641,20 +1677,20 @@ const walletAmount = async(req,res)=>{
 
     userData.totalbill =  userData.totalbill - wallet;
 
-    userData.wallet = 0
+    // userData.wallet = 0
     
-    await userData.save();
+    // await userData.save();
 
-    const walletDt = {
-      status:"debited",
-      amount:wallet,
-      date:Date.now(),
-      userId:id
+    // const walletDt = {
+    //   status:"debited",
+    //   amount:wallet,
+    //   date:Date.now(),
+    //   userId:id
       
-    }
+    // }
 
-    const Data = new walletData(walletDt)
-    Data.save();
+    // const Data = new walletData(walletDt)
+    // Data.save();
 
     
 

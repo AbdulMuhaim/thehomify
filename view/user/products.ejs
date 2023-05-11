@@ -240,7 +240,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                         <% for(products of productData2){ %>
 
                         <div class="single_product_item">
-                            <img src="<%= products.image[0] %>" alt="">
+                           <a href="/singleProduct/<%=products._id%>"> <img src="<%= products.image[0] %>" alt=""> </a>
                             <div class="single_product_text">
                                 <h4><%= products.name %></h4>
                                 <h3>$<%= products.price %></h3>

@@ -43,9 +43,6 @@
 
             </form>
 
-            <!-- <button style="margin-top: 10px;display: none;"  onclick="cancelCoupon()" class="btn_3" id="cancelBtn" >cancel coupons</button> -->
-
-
         </div>
         <div class="billing_details ">
 
@@ -77,8 +74,6 @@
                             <div class="card-body" style="margin-top: 50px;" id="Addresses">
                                 <h5><%=address[i].name%> <br> <%=address[i].company%> <br> <%=address[i].street%> <br> <%=address[i].district%> <br> <%=address[i].state%> <br> <%=address[i].pincode%></h5>
                                 
-                                <!-- <li><a  href="/editAddress/<%= address[i]._id %>"> <i></i>edit</a></li>
-                                <li><a  href="/deleteAddress/<%= address[i]._id %>"> <i></i>delete</a></li>      -->
 
                                 <button class="btn_3" ><a style="color: white;" onclick="editAddress('<%= address[i]._id %>')" > edit</a></button>
                                 <button class="btn_3" ><a style="color: white;" onclick="deleteAddress('<%= address[i]._id %>')" > delete</a></button>
@@ -184,27 +179,6 @@
                                 Store State / County, Store Postcode.
                             </p>
                         </div>
-
-
-                        <!-- <div class="payment_item active">
-                             <div class="radion_btn">
-                                <input type="radio" id="f-option7" name="paymentType" value="wallet payment" />
-                                <label for="f-option7">Wallet </label>
-
-                                <div class="check"></div>
-                            </div> 
-
-                            <div class="checkbox_btn">
-                                <input type="checkbox"  onclick="wallet()" id="wallet" value="wallet payment" />
-                                <label for="f-option7"> Wallet </label>
-
-                                <div class="check"></div>
-                            </div>
-
-                            <p>
-                                Your payment will be detected from your wallet
-                            </p>
-                        </div> -->
 
 
                         <div class="creat_account">
@@ -389,7 +363,7 @@ const smallTag = document.getElementById('codestate');
             method: 'post',
             data: $("#form").serialize(),
             success: (response) => {
-              
+            
                 if (response.codStatus) {
                     location.href = '/orderConfirmed'
                 } else if (response.wstatus) {
@@ -548,8 +522,8 @@ function wallet(){
         url:"/walletAmount",
         method:'get',
         success:(response)=>{
-            if(response.status){
-                document.getElementById('Amount1').innerText = response.wallet
+            if(response.status){ 
+                
                 document.getElementById('Amount2').innerText = response.wallet
                 $("#Wallet").hide();
                 $("#Discount").show();

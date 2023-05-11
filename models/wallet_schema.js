@@ -18,6 +18,10 @@ const wallet_schema = new mongoose.Schema({
         ref: "user",
         required: true,
       },
+      orderId: {
+        type: String,
+        required: true,
+      }
 });
 
 const walletData = mongoose.model('walletData',wallet_schema);
