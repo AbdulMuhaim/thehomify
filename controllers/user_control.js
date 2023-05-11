@@ -5,7 +5,8 @@ const category = require("../models/category_schema")
 const { TrustProductsEntityAssignmentsContextImpl } = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
 const order = require("../models/order_schema")
 let session;
-let Totall;
+let walletDis = 0;
+let couponDis = 0;
 const { v4: uuidv4 } = require("uuid");
 const coupon = require("../models/coupon_schema")
 const razorpay = require('razorpay');
@@ -995,48 +996,49 @@ const placeOrder = async (req, res) => {
 
 
 
-      } else if (req.body.paymentType === "wallet payment") {
-        if (req.body.total > userdt.wallet) {
+      // } else if (req.body.paymentType === "wallet payment") {
+      //   if (req.body.total > userdt.wallet) {
 
-          res.json({ insufficient: true });
-        } else {
-          if (!Array.isArray(orderDetails.productid)) {
-            orderDetails.productid = [orderDetails.productid];
-          }
-          if (!Array.isArray(orderDetails.quantity)) {
-            orderDetails.quantity = [orderDetails.quantity];
-          }
-          if (!Array.isArray(orderDetails.price)) {
-            orderDetails.price = [orderDetails.price];
-          }
-          for (let i = 0; i < orderDetails.productid.length; i++) {
-            const product1 = orderDetails.productid[i];
-            const quantity = orderDetails.quantity[i];
-            const total = orderDetails.price[i];
-            productdt.push({
-              productId: product1,
-              quantity: quantity,
-              singleTotal: total,
-            });
-          }
-          const order_id = "order_id_";
-          orderDetails.couponCode = req.body.coupon;
-          orderDetails.discount = req.body.discount;
-          orderDetails.total = orderDetails.total - req.body.discount;
-          orderDetails.orderId = order_id + uuidv4();
-          const latestorder = orderDetails.orderId;
-          console.log(latestorder);
+      //     res.json({ insufficient: true });
+      //   } else {
+      //     if (!Array.isArray(orderDetails.productid)) {
+      //       orderDetails.productid = [orderDetails.productid];
+      //     }
+      //     if (!Array.isArray(orderDetails.quantity)) {
+      //       orderDetails.quantity = [orderDetails.quantity];
+      //     }
+      //     if (!Array.isArray(orderDetails.price)) {
+      //       orderDetails.price = [orderDetails.price];
+      //     }
+      //     for (let i = 0; i < orderDetails.productid.length; i++) {
+      //       const product1 = orderDetails.productid[i];
+      //       const quantity = orderDetails.quantity[i];
+      //       const total = orderDetails.price[i];
+      //       productdt.push({
+      //         productId: product1,
+      //         quantity: quantity,
+      //         singleTotal: total,
+      //       });
+      //     }
+      //     const order_id = "order_id_";
+      //     orderDetails.couponCode = req.body.coupon;
+      //     orderDetails.discount = req.body.discount;
+      //     orderDetails.total = orderDetails.total - req.body.discount;
+      //     orderDetails.orderId = order_id + uuidv4();
+      //     const latestorder = orderDetails.orderId;
+      //     console.log(latestorder);
 
-          const orderdt = new order(orderDetails);
-          orderdt.save();
+      //     const orderdt = new order(orderDetails);
+      //     orderdt.save();
           
-          await user.updateOne(
-            { _id: userdata },
-            { $inc: { wallet: -orderDetails.total } }
-          );
-          res.json({ wstatus: true });
-        }
+      //     await user.updateOne(
+      //       { _id: userdata },
+      //       { $inc: { wallet: -orderDetails.total } }
+      //     );
+      //     res.json({ wstatus: true });
+      //   }
 
+      
 
       } else if (req.body.paymentType === "online payment") {
         if (!Array.isArray(orderDetails.productid)) {
@@ -1052,11 +1054,10 @@ const placeOrder = async (req, res) => {
           const product1 = orderDetails.productid[i];
           const quantity = orderDetails.quantity[i];
           const total = orderDetails.price[i];
-          const Total = total - 
           productdt.push({
             productId: product1,
             quantity: quantity,
-            singleTotal: Total,
+            singleTotal: total,
           });
         }
 
@@ -1074,8 +1075,11 @@ console.log("keyyy");
         console.log("hoii");
         console.log(process.env.keyid)
         console.log(process.env.secret)
+        const finalTotal = orderDetails.total - walletDis
+        console.log(finalTotal)
+        console.log("samyukth");
         let options = {
-          amount: orderDetails.total * 100, // amount in the smallest currency unit
+          amount: finalTotal * 100, // amount in the smallest currency unit
           currency: "INR",
           receipt: "" + orderdt._id,
         };
@@ -1141,6 +1145,9 @@ const verifyPayment = async (req, res) => {
 const orderConfirmed = async (req, res) => {
   
   try {
+
+    console.log('orderconfoooooooooo');
+
     const id = req.session.user_id
 
     if(walletCheck==true){
@@ -1152,14 +1159,14 @@ const orderConfirmed = async (req, res) => {
       .lean();
 
     const orderId = Idd.orderId  
-    const userDatta =await user.findOne({_id:id})
-    const wall = userDatta.wallet
-    userDatta.totalbill =  userData.totalbill - wall;
-    await userDatta.save();
+    const userData =await user.findOne({_id:id})
+    const wall = userData.wallet
+    userData.totalbill =  userData.totalbill - wall;
+    await userData.save();
 
     const walletDt = {
       status:"debited",
-      amount:wallet,
+      amount:wall,
       date:Date.now(),
       userId:id,
       orderId:orderId
@@ -1625,12 +1632,15 @@ const cancelOrder = async (req, res) => {
 
 const cancelCoupon =async(req,res)=>{
   try {
+
+    
     const discount = req.body.discount
     console.log("hii");
     console.log(discount);
     let Dis = parseInt(discount);
 
     const userdata=req.session.user_id
+
     const User= await user.findOne({_id:userdata})
     
     const Discount = User.totalbill + Dis;
@@ -1674,6 +1684,8 @@ const walletAmount = async(req,res)=>{
     const userData =await user.findOne({_id:id})
 
     const wallet = userData.wallet
+
+    walletDis = userData.wallet
 
     userData.totalbill =  userData.totalbill - wallet;
 

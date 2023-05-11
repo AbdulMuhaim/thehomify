@@ -1,6 +1,6 @@
 //database connection
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/Ecommerce');
+mongoose.connect('mongodb+srv://muhaim25:12345@cluster0.su61nil.mongodb.net/Ecommerce');
 //env
 const dotenv=require('dotenv').config()
 //express assigning to app
@@ -27,7 +27,7 @@ app.use('/',user_route);
 const admin_route = require('./routes/admin_route');
 app.use('/admin',admin_route);
 //port setup(local url)
-app.listen(3001,()=>{
+app.listen(3000,()=>{
     console.log('server started');
 })
 // //view engine
