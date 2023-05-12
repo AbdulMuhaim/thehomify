@@ -7,6 +7,7 @@ const order = require("../models/order_schema")
 let session;
 let walletDis = 0;
 let couponDis = 0;
+
 const { v4: uuidv4 } = require("uuid");
 const coupon = require("../models/coupon_schema")
 const razorpay = require('razorpay');
@@ -866,6 +867,8 @@ const changeQty = async (req, res) => {
 
 //checkout Page
 const checkoutPage = async (req, res) => {
+  console.log("daaa2");
+  console.log(walletDis);
   try {
     const userDatas = await user.findOne({ _id: req.session.user_id }).lean();
     const address = userDatas.address;
@@ -882,7 +885,7 @@ const checkoutPage = async (req, res) => {
 
     const userData = cartfind.name
 
-    let totalbill = cartfind.totalbill;
+    let totalbill = cartfind.totalbill
 
     let wallet = cartfind.wallet
 
@@ -948,6 +951,10 @@ res.redirect('/checkoutPage')
 
 const placeOrder = async (req, res) => {
   try {
+
+    console.log("daaaaaa2");
+    console.log(walletDis);
+
     if (req.session.user_id) {
       const userdata = req.session.user_id;
       const userdt = await user.findOne({ _id: userdata });
@@ -1075,7 +1082,7 @@ console.log("keyyy");
         console.log("hoii");
         console.log(process.env.keyid)
         console.log(process.env.secret)
-        const finalTotal = orderDetails.total - walletDis
+        const finalTotal = orderDetails.total-(couponDis+walletDis)
         console.log(finalTotal)
         console.log("samyukth");
         let options = {
@@ -1162,7 +1169,7 @@ const orderConfirmed = async (req, res) => {
     const userData =await user.findOne({_id:id})
     const wall = userData.wallet
     userData.totalbill =  userData.totalbill - wall;
-    await userData.save();
+    // await userData.save();
 
     const walletDt = {
       status:"debited",
@@ -1179,6 +1186,7 @@ const orderConfirmed = async (req, res) => {
     const userdata = req.session.user_id;
     const userData = await user.findOne({_id:userdata})
     const totalbill = userData.totalbill
+    const totaaal = totalbill-(couponDis+walletDis);
     const billAmount = userData.totalbill
     const wallet = userData.wallet
     userData.wallet = 0
@@ -1202,7 +1210,7 @@ const orderConfirmed = async (req, res) => {
     
    
     
-    res.render("orderConformation", { userdata, latestOrder,productDt:productDt,userData:userData.name,billAmount,wallet });
+    res.render("orderConformation", { userdata, latestOrder,productDt:productDt,userData:userData.name,billAmount,wallet,totaaal });
   } catch (error) {
     console.log(error.message);
   }
@@ -1215,6 +1223,8 @@ const orderConfirmed = async (req, res) => {
 //apply Coupon & check coupon
 const applyCoupon = async (req, res) => {
   try {
+    console.log(couponDis);
+    console.log("fffffoooo");
     let code = req.params.id;
     console.log("helloooo");
     console.log(code);
@@ -1240,19 +1250,32 @@ const applyCoupon = async (req, res) => {
           let userID = userId._id;
           if (userfind == null) {
             let discount = coupons.discount;
-            let total = userId.totalbill
+            const total = userId.totalbill
             let discountPrice = Math.min(
               coupons.maxLimit,
               (userId.totalbill * discount) / 100
             );
-            userId.totalbill = userId.totalbill - discountPrice;
+            console.log(discountPrice+"dis");
+            couponDis = discountPrice;
+            console.log(couponDis+"coup");
+            console.log("geeeeee");
+            console.log(walletDis+"wal");
+            const totaaaal = walletDis+couponDis
+            console.log(totaaaal);
+            console.log("gooooo");
+            const userrr = await user.findOne({ _id: userdata });
+            const lasttot = userrr.totalbill
+
+            const tot = lasttot-totaaaal
+            console.log(tot);
+            console.log('come');
             
-            await userId.save();
+            // await userId.save();
             await coupon.findOneAndUpdate(
               { couponId: code },
               { $push: { user: userId._id } }
             );
-            res.json({ status: true, discountPrice });
+            res.json({ status: true, discountPrice,tot });
             
           } else {
             res.json({ used: true });
@@ -1645,13 +1668,24 @@ const cancelCoupon =async(req,res)=>{
     const User= await user.findOne({_id:userdata})
     
     const Discount = User.totalbill + Dis;
-    const updateTotal = await user.updateOne({_id: userdata},{$set:{totalbill:Discount}})
+    // const updateTotal = await user.updateOne({_id: userdata},{$set:{totalbill:Discount}})
     
     const totalBill = await user.findOne({_id:userdata})
     
     const Bill = await totalBill.totalbill
 
      console.log(Bill);
+
+     couponDis = 0;
+
+     console.log(Bill+"bill");
+
+     const totaaaal = Bill-(couponDis+walletDis)
+
+     console.log(totaaaal+"disbill");
+
+
+
 
     const code= req.params._id
     console.log(code);
@@ -1666,7 +1700,7 @@ const cancelCoupon =async(req,res)=>{
  
   //  await updateTotal.save();
 
-    res.json({success:true,Bill})
+    res.json({success:true,Bill,totaaaal})
   } catch (error) {
     console.log(error.message);
   }
@@ -1677,6 +1711,7 @@ let walletCheck;
 
 const walletAmount = async(req,res)=>{
   try {
+    console.log("daaaaa");
 
     walletCheck = true;
 
@@ -1688,28 +1723,13 @@ const walletAmount = async(req,res)=>{
 
     walletDis = userData.wallet
 
-    userData.totalbill =  userData.totalbill - wallet;
-
-    // userData.wallet = 0
-    
-    // await userData.save();
-
-    // const walletDt = {
-    //   status:"debited",
-    //   amount:wallet,
-    //   date:Date.now(),
-    //   userId:id
-      
-    // }
-
-    // const Data = new walletData(walletDt)
-    // Data.save();
-
-    
-
     const total = userData.totalbill
 
-    res.json({status:true,wallet,total})
+    const totaal = total-(walletDis+couponDis)
+
+    console.log(totaal+"ready");
+
+    res.json({status:true,wallet,total,totaal})
 
   } catch (error) {
     console.log(error.message);
