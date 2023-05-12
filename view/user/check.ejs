@@ -526,16 +526,10 @@ function wallet(){
         method:'get',
         success:(response)=>{
             if(response.status){ 
-              
                 $("#total").load(location.href + " #total");
                 document.getElementById('Amount2').innerText = response.wallet
                 $("#Wallet").hide();
                 $("#Discount").show();
-
-                // document.getElementById('total').innerText = response.totaal
-                
-        //   $('#wall').load('/check #wall')
-        //     $('#dicount').load('/check #dicount')
             }
 
         }
