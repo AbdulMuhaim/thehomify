@@ -1179,6 +1179,7 @@ const orderConfirmed = async (req, res) => {
     const userdata = req.session.user_id;
     const userData = await user.findOne({_id:userdata})
     const totalbill = userData.totalbill
+    const billAmount = userData.totalbill
     const wallet = userData.wallet
     userData.wallet = 0
     await userData.save();
@@ -1201,7 +1202,7 @@ const orderConfirmed = async (req, res) => {
     
    
     
-    res.render("orderConformation", { userdata, latestOrder,productDt:productDt,userData:userData.name,totalbill,wallet });
+    res.render("orderConformation", { userdata, latestOrder,productDt:productDt,userData:userData.name,billAmount,wallet });
   } catch (error) {
     console.log(error.message);
   }
