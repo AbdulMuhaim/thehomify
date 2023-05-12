@@ -845,6 +845,7 @@ const orderConfirmed = async (req, res) => {
     console.log(error.message);
   }
 };
+let coupAmount;
 const applyCoupon = async (req, res) => {
   try {
     let code = req.params.id;
@@ -872,7 +873,9 @@ const applyCoupon = async (req, res) => {
               (userId.totalbill * discount) / 100
             );
             const userrr = await user.findOne({ _id: userdata });
-            userrr.totalbill =userrr.totalbill-couponDis
+            userrr.totalbill =userrr.totalbill-discountPrice
+            coupAmount=discountPrice
+            console.log(discountPrice);
             await userrr.save();
             const tot = userrr.totalbill
             await coupon.findOneAndUpdate(
@@ -1120,7 +1123,8 @@ const cancelCoupon =async(req,res)=>{
     const User= await user.findOne({_id:userdata})
     const Discount = User.totalbill + Dis;    
     const tot = await user.findOne({_id:userdata})
-    tot.totalbill = tot.totalbill-couponDis
+    console.log(coupAmount);
+    tot.totalbill = tot.totalbill+coupAmount
     await tot.save();
     const code= req.params._id
     const updatedCoupon = await coupon.findOneAndUpdate(
