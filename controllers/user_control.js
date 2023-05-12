@@ -1158,18 +1158,13 @@ const orderConfirmed = async (req, res) => {
     const id = req.session.user_id
 
     if(walletCheck==true){
+      console.log("confo 2");
 
-      const Idd = await order
-      .findOne({})
-      .sort({date:-1})
-      .populate("products.productId")
-      .lean();
+    const Idd = await order.findOne({}).sort({date:-1})
 
     const orderId = Idd.orderId  
     const userData =await user.findOne({_id:id})
     const wall = userData.wallet
-    userData.totalbill =  userData.totalbill - wall;
-    // await userData.save();
 
     const walletDt = {
       status:"debited",
@@ -1181,7 +1176,7 @@ const orderConfirmed = async (req, res) => {
     const Data = new walletData(walletDt)
     Data.save();
   }
-    
+    console.log("confo3");
     const orderData = await order.findOne({})
     const userdata = req.session.user_id;
     const userData = await user.findOne({_id:userdata})
@@ -1196,6 +1191,7 @@ const orderConfirmed = async (req, res) => {
       { _id: userdata },
       { $pull: { cart: {} } }
     );
+    console.log("confo4");
     const Total = await user.updateOne({_id:userdata},{$set:{totalbill:0}})
 
     const latestOrder = await order
@@ -1209,7 +1205,7 @@ const orderConfirmed = async (req, res) => {
     const productDt =await latestOrder.products
     
    
-    
+    console.log("confo5");
     res.render("orderConformation", { userdata, latestOrder,productDt:productDt,userData:userData.name,billAmount,wallet,totaaal });
   } catch (error) {
     console.log(error.message);
@@ -1260,13 +1256,17 @@ const applyCoupon = async (req, res) => {
             console.log(couponDis+"coup");
             console.log("geeeeee");
             console.log(walletDis+"wal");
-            const totaaaal = walletDis+couponDis
-            console.log(totaaaal);
+            // const totaaaal = walletDis+couponDis
+            // console.log(totaaaal);
             console.log("gooooo");
             const userrr = await user.findOne({ _id: userdata });
-            const lasttot = userrr.totalbill
+            userrr.totalbill =userrr.totalbill-couponDis
+            await userrr.save();
 
-            const tot = lasttot-totaaaal
+            const tot = userrr.totalbill
+
+
+            // const tot = lasttot-totaaaal
             console.log(tot);
             console.log('come');
             
@@ -1275,7 +1275,7 @@ const applyCoupon = async (req, res) => {
               { couponId: code },
               { $push: { user: userId._id } }
             );
-            res.json({ status: true, discountPrice,tot });
+            res.json({ status: true, discountPrice, });
             
           } else {
             res.json({ used: true });
@@ -1670,22 +1670,11 @@ const cancelCoupon =async(req,res)=>{
     const Discount = User.totalbill + Dis;
     // const updateTotal = await user.updateOne({_id: userdata},{$set:{totalbill:Discount}})
     
-    const totalBill = await user.findOne({_id:userdata})
+    const tot = await user.findOne({_id:userdata})
     
-    const Bill = await totalBill.totalbill
+    tot.totalbill = tot.totalbill-couponDis
 
-     console.log(Bill);
-
-     couponDis = 0;
-
-     console.log(Bill+"bill");
-
-     const totaaaal = Bill-(couponDis+walletDis)
-
-     console.log(totaaaal+"disbill");
-
-
-
+    await tot.save();
 
     const code= req.params._id
     console.log(code);
@@ -1700,7 +1689,7 @@ const cancelCoupon =async(req,res)=>{
  
   //  await updateTotal.save();
 
-    res.json({success:true,Bill,totaaaal})
+    res.json({success:true})
   } catch (error) {
     console.log(error.message);
   }
@@ -1723,13 +1712,18 @@ const walletAmount = async(req,res)=>{
 
     walletDis = userData.wallet
 
-    const total = userData.totalbill
+    // const totaal = walletDis+couponDis
 
-    const totaal = total-(walletDis+couponDis)
+    userData.totalbill=userData.totalbill-walletDis
 
-    console.log(totaal+"ready");
+    await userData.save();
 
-    res.json({status:true,wallet,total,totaal})
+    tot = userData.totalbill
+
+
+    console.log(tot+"ready");
+
+    res.json({status:true,wallet})
 
   } catch (error) {
     console.log(error.message);

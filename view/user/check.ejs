@@ -61,7 +61,7 @@
 
                         
 
-                        <div class="card text-center mt-3" style="background-color:#ecfdff;width: 600px;">
+                        <div id="Addresses" class="card text-center mt-3" style="background-color:#ecfdff;width: 600px;">
                             <div class="form-check" style="position: absolute; top: 12px; left: 12px;"  >
                                 <input class="form-check-input" type="radio" name="deliveryAddress" id=""
                                     value="<%=address[i].name%>,<%=address[i].company%>,<%=address[i].street%>,<%=address[i].district%>,<%=address[i].state%>,<%=address[i].pincode%>"
@@ -71,10 +71,9 @@
                                 </label>
                             </div>
 
-                            <div class="card-body" style="margin-top: 50px;" id="Addresses">
+                            <div class="card-body" style="margin-top: 50px;" >
                                 <h5><%=address[i].name%> <br> <%=address[i].company%> <br> <%=address[i].street%> <br> <%=address[i].district%> <br> <%=address[i].state%> <br> <%=address[i].pincode%></h5>
                                 
-
                                 <button class="btn_3" ><a style="color: white;" onclick="editAddress('<%= address[i]._id %>')" > edit</a></button>
                                 <button class="btn_3" ><a style="color: white;" onclick="deleteAddress('<%= address[i]._id %>')" > delete</a></button>
                          </div>
@@ -130,7 +129,7 @@
                             </li>
 
                             <li id="wall">
-                                <a id="Wallet" href="#" onclick="wallet()" style="text-decoration: none;color:blue;cursor: pointer;">Add Wallet Balance
+                                <a id="Wallet"  onclick="wallet()" style="text-decoration: none;color:blue;cursor: pointer;">Add Wallet Balance
                                     <span id="Amount1" class="text-success">&#8377;<%= 0 %></span>
                                 </a>
                                 <a id="Discount" style="text-decoration: none;color:blue;display: none;">Wallet Discount
@@ -449,9 +448,9 @@ const smallTag = document.getElementById('codestate');
                     console.log(response.tot);
                     console.log(response.discountPrice)
                     discount = response.discountPrice
-                    document.getElementById('total').innerText = response.tot
+                    // document.getElementById('total').innerText = response.tot
 
-                    // $("#total").load(location.href + " #total");
+                    $("#total").load(location.href + " #total");
                     //document.getElementById('coupon1').innerText = couponValue
                     $("#discount1").val(response.discountPrice);
                     $("#coupon1").val(couponValue);
@@ -491,8 +490,8 @@ const smallTag = document.getElementById('codestate');
         method:'post',
           success: (response) => {
 
-            totalBill= response.Bill
-            console.log(totalBill);
+            // totalBill= response.Bill
+            // console.log(totalBill);
            
           Swal.fire({
             position: 'top-end',
@@ -501,8 +500,10 @@ const smallTag = document.getElementById('codestate');
             timer: 1500
           })
 
+          $("#total").load(location.href + " #total");
+
           document.getElementById('disc').innerText = 0
-          document.getElementById('total').innerText = response.totaaaal
+        //   document.getElementById('total').innerText = response.totaaaal
 
 
 
@@ -525,15 +526,16 @@ function wallet(){
         method:'get',
         success:(response)=>{
             if(response.status){ 
-                
+              
+                $("#total").load(location.href + " #total");
                 document.getElementById('Amount2').innerText = response.wallet
                 $("#Wallet").hide();
                 $("#Discount").show();
 
-                document.getElementById('total').innerText = response.totaal
+                // document.getElementById('total').innerText = response.totaal
                 
-          $('#wall').load('/check #wall')
-            $('#dicount').load('/check #dicount')
+        //   $('#wall').load('/check #wall')
+        //     $('#dicount').load('/check #dicount')
             }
 
         }
@@ -560,9 +562,8 @@ function deleteAddress(id){
         method:'get',
         success:(response)=>{
             console.log("mission success");
-
-
-            $('#Addresses').load('/checkoutPage $Addresses')
+            $("#Addresses").load(location.href + " #Addresses");
+            // $('#Addresses').load('/checkoutPage $Addresses')
         }
      })
 }
