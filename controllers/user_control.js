@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const user = require("../models/user_schema");
 const product = require("../models/product_schema");
 const category = require("../models/category_schema")
-const { TrustProductsEntityAssignmentsContextImpl } = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
+// const { TrustProductsEntityAssignmentsContextImpl } = require("twilio/lib/rest/trusthub/v1/trustProducts/trustProductsEntityAssignments");
 const order = require("../models/order_schema")
 let session;
 let walletDis = 0;
@@ -19,13 +19,13 @@ var instance = new razorpay({
   key_id: process.env.keyid,
   key_secret: process.env.secret
 });
-const client = require("twilio")(
-  process.env.tid,
-  process.env.token,
-  {
-    lazyLoading: true,
-  }
-);
+// const client = require("twilio")(
+//   process.env.tid,
+//   process.env.token,
+//   {
+//     lazyLoading: true,
+//   }
+// );
 const home = async (req, res) => {
   const userData = await user.findOne({ _id: req.session.user_id });
   const bannerData = await banner.find({status:true}).limit(5).lean();
@@ -205,10 +205,10 @@ const forgotPassword = async (req, res) => {
     const mobile = userData.mobile;
     const password = req.body.password; 
     try {
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // const hashedPassword = await bcrypt.hash(password, 10);
       const userdata = await user.updateOne(
         { mobile: mobile },
-        { $set: { password: hashedPassword } }
+        { $set: { password: password } }
       );
       res.redirect("/login");
     } catch (error) {
@@ -221,7 +221,7 @@ const verifyLogin = async (req, res) => {
     const password = req.body.password;
     const userData = await user.findOne({ email: email });
     if (userData) {
-      const passwordmatch = await bcrypt.compare(password, userData.password);
+      const passwordmatch = password === userData.password
       if (passwordmatch) {
         if (userData.status == true) {
           req.session.user_id = userData._id;
